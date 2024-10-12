@@ -1,6 +1,6 @@
-import React, { createContext, useReducer } from 'react';
-import client from './apollo';
-import { AppContextAction, TOKEN } from './common/constant';
+import React, { createContext, useReducer } from "react";
+import client from "./apollo";
+import { AppContextAction, TOKEN } from "./common/constant";
 
 const initialState = {
   currentUser: {},
@@ -15,7 +15,7 @@ const reducer = (state, action) => {
       const user = action.data || {};
       return { ...state, currentUser: { ...state?.currentUser, ...user } };
     case AppContextAction.SET_AUTH_TOKEN:
-      localStorage.setItem(TOKEN, action.data ?? '');
+      localStorage.setItem(TOKEN, action.data ?? "");
       return { ...state, authToken: action.data };
     case AppContextAction.LOGOUT:
       localStorage.clear();
@@ -43,16 +43,13 @@ const AppContextProvider = ({ children }) => {
 
   const isAuthenticated = () => state.authenticated;
 
-  const initializeAuth = (
-    authToken,
-    userData,
-  ) => {
+  const initializeAuth = (authToken, userData) => {
     const token = authToken || getToken();
     const user = userData || {};
     if (token) {
-      dispatch({ type: 'SET_AUTH_TOKEN', data: token });
-      dispatch({ type: 'SET_AUTHENTICATED', data: true });
-      dispatch({ type: 'SET_CURRENT_USER', data: user });
+      dispatch({ type: "SET_AUTH_TOKEN", data: token });
+      dispatch({ type: "SET_AUTHENTICATED", data: true });
+      dispatch({ type: "SET_CURRENT_USER", data: user });
     }
   };
 

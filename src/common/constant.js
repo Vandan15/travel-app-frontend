@@ -1,6 +1,7 @@
 /* ROUTERS  */
 export const ROUTES = {
   MAIN: "/",
+  PROFILE: "/profile",
   LOGOUT: "/logout",
   SIGNUP: "/signup",
   LOGIN: "/login",
@@ -18,3 +19,5 @@ export const AppContextAction = {
   LOGOUT: "LOGOUT",
   SET_AUTHENTICATED: "SET_AUTHENTICATED",
 };
+
+export const COOKIE_EXPIRY = 1; // 1 minute

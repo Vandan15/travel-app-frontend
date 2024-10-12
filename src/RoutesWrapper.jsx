@@ -4,16 +4,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, useRoutes } from "react-router-dom";
 import { AppContext } from "./AppContext";
 import { ROUTES } from "./common/constant";
-import AppLayout from "./common/layouts/AppLayout";
 import Error404 from "./components/common/error/Error404";
+import AppLayout from "./components/common/layouts/AppLayout";
 import AppLoader from "./components/common/loaders/AppLoader";
 import ForgotPassword from "./modules/auth/ForgotPassword";
 import { GET_CURRENT_USER } from "./modules/auth/graphql/queries";
 import Login from "./modules/auth/Login";
 import Logout from "./modules/auth/Logout";
+import Profile from "./modules/auth/Profile";
 import Register from "./modules/auth/Register";
 import ResetPassword from "./modules/auth/ResetPassword";
 import VerifyEmail from "./modules/auth/VerifyEmail";
+import OpenRoute from "./OpenRoute";
 import Home from "./pages/Home/Home";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
@@ -77,10 +79,32 @@ const RoutesCollection = () => {
     },
   ];
 
+  // const PROFILE_MODULES = [
+  //   {
+  //     path: ROUTES.PROFILE,
+  //     element: <PrivateRoute />,
+  //     children: [
+  //       {
+  //         path: ROUTES.PROFILE,
+  //         children: [
+  //           {
+  //             path: ROUTES.PROFILE,
+  //             element: (
+  //               <AppLayout>
+  //                 <Profile />
+  //               </AppLayout>
+  //             ),
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  // ];
+
   const OTHER_MODULES = [
     {
       path: ROUTES.MAIN,
-      element: <PublicRoute />,
+      element: <OpenRoute />,
       children: [
         {
           path: ROUTES.MAIN,
@@ -103,9 +127,36 @@ const RoutesCollection = () => {
     },
   ];
 
+  const PROFILE_MODULES = [
+    {
+      path: ROUTES.MAIN,
+      element: <PrivateRoute />,
+      children: [
+        {
+          path: ROUTES.MAIN,
+          children: [
+            {
+              path: ROUTES.PROFILE,
+              element: (
+                <AppLayout>
+                  <Profile />
+                </AppLayout>
+              ),
+            },
+            {
+              path: "*",
+              element: <Error404 />,
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
   const element = useRoutes([
     ...AUTH_MODULES,
     ...OTHER_MODULES,
+    ...PROFILE_MODULES,
   ]);
   return element;
 };

@@ -9,6 +9,7 @@
     margin-bottom: -50px;
     display: flex;
     align-items: flex-end;
+    z-index: 99;
 }
 
 .box-search-advance .box-search .item-search {
@@ -32,7 +33,7 @@
 
 }
 
-.box-search-advance .box-search .item-search-2 
+.box-search-advance .box-search .item-search-2
 .react-datepicker__input-container{
     font-family: bootstrap-icons !important;
     font-style: normal;
@@ -46,7 +47,7 @@
     display: block;
 }
 
-.box-search-advance .box-search .item-search-2 
+.box-search-advance .box-search .item-search-2
 .react-datepicker__input-container::before{
     content: "\f214";
     position: absolute;
@@ -56,7 +57,7 @@
 }
 
 
-.box-search-advance .box-search .item-search-2 
+.box-search-advance .box-search .item-search-2
 .react-datepicker__input-container::after{
     content: "\f282";
     position: absolute;
@@ -65,7 +66,7 @@
     font-size: var(--bodyText);
 }
 
-.box-search-advance .box-search .item-search-2 
+.box-search-advance .box-search .item-search-2
 .react-datepicker-wrapper input{
     border: none;
     padding: 5px 40px 5px 5px;
@@ -78,7 +79,7 @@
     font-family: "Poppins", sans-serif;
 }
 
-.box-search-advance .box-search .item-search-2 
+.box-search-advance .box-search .item-search-2
 .react-datepicker-wrapper input:focus{
     border: none;
     outline: none;
@@ -154,28 +155,3 @@
         display: none;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

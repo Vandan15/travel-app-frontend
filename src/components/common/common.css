@@ -1,0 +1,10 @@
+.app-logo{
+  font-size: 22px;
+  color: var(--black);
+  line-height: 150%;
+  font-family: var(--fontFamily1);
+  font-weight: bold;
+  text-transform: capitalize;
+  text-decoration: none;
+  text-align: center;
+}
