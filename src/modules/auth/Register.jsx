@@ -1,8 +1,11 @@
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Alert, Container, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../common/constant";
 import AppLogo from "../../components/common/AppLogo";
+import CommonButton from "../../components/primitives/CommonButton";
+import { EMAIL_SIGNUP } from "./graphql/mutations";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -13,6 +16,11 @@ export default function Register() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const [registerMutate, { loading }] = useMutation(EMAIL_SIGNUP, {
+    onError: () => {},
+  });
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -27,6 +35,7 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     let isValid = true;
+    setSuccess(false);
 
     if (!name) {
       setNameError("Name is required");
@@ -68,7 +77,22 @@ export default function Register() {
     }
 
     if (isValid) {
-      // Handle form submission
+      registerMutate({
+        variables: {
+          data: {
+            name,
+            email,
+            password,
+          },
+        },
+        onCompleted: () => {
+          setSuccess(true);
+          setName("");
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+        },
+      });
     }
   };
 
@@ -82,7 +106,7 @@ export default function Register() {
           <AppLogo />
         </div>
         <Form onSubmit={handleSubmit} autoComplete="off">
-          <Form.Group controlId="name" className="mb-3">
+          <Form.Group controlId="name" className="mb-4">
             <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
@@ -95,7 +119,7 @@ export default function Register() {
               {nameError}
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group controlId="email" className="mb-3">
+          <Form.Group controlId="email" className="mb-4">
             <Form.Label>Email</Form.Label>
             <Form.Control
               type="text"
@@ -108,7 +132,7 @@ export default function Register() {
               {emailError}
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group controlId="password" className="mb-3">
+          <Form.Group controlId="password" className="mb-4">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
@@ -121,7 +145,7 @@ export default function Register() {
               {passwordError}
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group controlId="confirmPassword" className="mb-3">
+          <Form.Group controlId="confirmPassword" className="mb-4">
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
               type="password"
@@ -134,9 +158,22 @@ export default function Register() {
               {confirmPasswordError}
             </Form.Control.Feedback>
           </Form.Group>
-          <Button variant="primary" type="submit" className="w-100 mb-3">
-            Register
-          </Button>
+          <CommonButton
+            variant="primary"
+            type="submit"
+            className="w-100 mb-3"
+            disabled={loading}
+          >
+            {loading ? "Registering..." : "Register"}
+          </CommonButton>
+          {success && (
+            <Alert key="success" variant="success">
+              <p>
+                Verification email sent successfully. Check your email for
+                verification link.
+              </p>
+            </Alert>
+          )}
           <div className="text-center">
             Already have an account? <Link to={ROUTES.LOGIN}>Login</Link>
           </div>

@@ -1,0 +1,21 @@
+.common-btn.btn-primary {
+  background-color: var(--primaryClr);
+  border-color: var(--primaryClr);
+  transition: all 0.3s ease;
+}
+
+.common-btn.btn-secondary {
+  background-color: transparent;
+  border-color: var(--primaryClr);
+  transition: all 0.3s ease;
+}
+
+
+.common-btn.btn-primary:hover {
+  opacity: 0.8;
+}
+
+.common-btn.btn-secondary:hover {
+  opacity: 0.8;
+  background-color: var(--primaryClr);
+}

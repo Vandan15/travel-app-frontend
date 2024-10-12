@@ -1,6 +1,7 @@
 import { ApolloProvider } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Toaster } from "react-hot-toast";
 import client from "./apollo";
 import { AppContextProvider } from "./AppContext";
 import "./index.css";
@@ -12,5 +13,6 @@ root.render(
     <AppContextProvider>
       <RoutesWrapper />
     </AppContextProvider>
+    <Toaster />
   </ApolloProvider>
 );

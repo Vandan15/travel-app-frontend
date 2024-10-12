@@ -6,6 +6,7 @@ import { AppContext } from "./AppContext";
 import { ROUTES } from "./common/constant";
 import Error404 from "./components/common/error/Error404";
 import AppLayout from "./components/common/layouts/AppLayout";
+import AuthLayout from "./components/common/layouts/AuthLayout";
 import AppLoader from "./components/common/loaders/AppLoader";
 import ForgotPassword from "./modules/auth/ForgotPassword";
 import { GET_CURRENT_USER } from "./modules/auth/graphql/queries";
@@ -24,7 +25,11 @@ const RoutesCollection = () => {
   const AUTH_MODULES = [
     {
       path: ROUTES.LOGIN,
-      element: <PublicRoute />,
+      element: (
+        <AuthLayout>
+          <PublicRoute />
+        </AuthLayout>
+      ),
       children: [
         {
           path: ROUTES.LOGIN,
@@ -34,7 +39,11 @@ const RoutesCollection = () => {
     },
     {
       path: ROUTES.REGISTER,
-      element: <PublicRoute />,
+      element: (
+        <AuthLayout>
+          <PublicRoute />
+        </AuthLayout>
+      ),
       children: [
         {
           path: ROUTES.REGISTER,
@@ -44,7 +53,11 @@ const RoutesCollection = () => {
     },
     {
       path: ROUTES.VERIFY_EMAIL,
-      element: <PublicRoute />,
+      element: (
+        <AuthLayout>
+          <PublicRoute />
+        </AuthLayout>
+      ),
       children: [
         {
           path: ROUTES.VERIFY_EMAIL,
@@ -54,7 +67,11 @@ const RoutesCollection = () => {
     },
     {
       path: ROUTES.FORGET_PASSWORD,
-      element: <PublicRoute />,
+      element: (
+        <AuthLayout>
+          <PublicRoute />
+        </AuthLayout>
+      ),
       children: [
         {
           path: ROUTES.FORGET_PASSWORD,
@@ -64,7 +81,11 @@ const RoutesCollection = () => {
     },
     {
       path: ROUTES.RESET,
-      element: <PublicRoute />,
+      element: (
+        <AuthLayout>
+          <PublicRoute />
+        </AuthLayout>
+      ),
       children: [
         {
           path: ROUTES.RESET,
@@ -173,7 +194,8 @@ const RoutesWrapper = () => {
   const [getCurrentUser] = useLazyQuery(GET_CURRENT_USER, {
     fetchPolicy: "network-only",
     onCompleted: (res) => {
-      initializeAuth(idToken, res?.currentUser ?? null);
+      const user = res?.getUserDetails;
+      initializeAuth(idToken, user);
       setLoading(false);
     },
     onError: () => {

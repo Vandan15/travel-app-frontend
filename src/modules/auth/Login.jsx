@@ -1,14 +1,24 @@
-import React, { useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { useMutation } from "@apollo/client";
+import React, { useContext, useState } from "react";
+import { Container, Form } from "react-bootstrap";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { AppContext } from "../../AppContext";
 import { ROUTES } from "../../common/constant";
 import AppLogo from "../../components/common/AppLogo";
+import CommonButton from "../../components/primitives/CommonButton";
+import { EMAIL_LOGIN } from "./graphql/mutations";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const { initializeAuth } = useContext(AppContext);
+
+  const [loginMutate, { loading }] = useMutation(EMAIL_LOGIN, {
+    onError: () => {},
+  });
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,12 +47,19 @@ export default function Login() {
     }
 
     if (isValid) {
-      console.log("Submitted data:", { email, password });
-      // Reset form and errors
-      setEmail("");
-      setPassword("");
-      setEmailError("");
-      setPasswordError("");
+      loginMutate({
+        variables: { data: { email, password } },
+        onCompleted: (response) => {
+          console.log(response);
+          const { accessToken, user } = response.login;
+          setEmail("");
+          setPassword("");
+          setEmailError("");
+          setPasswordError("");
+          initializeAuth(accessToken, user);
+          toast.success(response?.login?.message);
+        },
+      });
     }
   };
 
@@ -71,7 +88,7 @@ export default function Login() {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formPassword">
+          <Form.Group className="mb-4" controlId="formPassword">
             <div className="d-flex justify-content-between align-items-center">
               <Form.Label>Password</Form.Label>
               <Link to={ROUTES.FORGET_PASSWORD} className="small">
@@ -91,9 +108,14 @@ export default function Login() {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Button variant="primary" type="submit" className="w-100 mb-4">
-            Submit
-          </Button>
+          <CommonButton
+            variant="primary"
+            type="submit"
+            className="w-100 mb-4"
+            disabled={loading}
+          >
+            {loading ? "Logging in..." : "Login"}
+          </CommonButton>
           <div className="text-center">
             Don't have an account? <Link to={ROUTES.REGISTER}>Register</Link>
           </div>

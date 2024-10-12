@@ -1,7 +1,8 @@
-import { ApolloClient, createHttpLink, from } from "@apollo/client";
+import { ApolloClient, ApolloLink, createHttpLink, from } from "@apollo/client";
 import { InMemoryCache } from "@apollo/client/cache";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
+import toast from "react-hot-toast";
 import { TOKEN } from "./common/constant";
 
 let disableToastTimeout = null;
@@ -11,24 +12,18 @@ const httpLink = createHttpLink({
   uri: process.env.REACT_APP_SERVER_URL,
 });
 
-const toast = ({ message: content, type }) => {
-  // messageContext?.destroy();
-  // switch (type) {
-  //   case "info":
-  //     messageContext?.info(content);
-  //     break;
-  //   case "success":
-  //     messageContext?.success(content);
-  //     break;
-  //   case "warning":
-  //     messageContext?.warning(content);
-  //     break;
-  //   case "error":
-  //     messageContext?.error(content);
-  //     break;
-  //   default:
-  //     break;
-  // }
+const toastMessage = ({ message: content, type }) => {
+  toast.dismiss();
+  switch (type) {
+    case "success":
+      toast.success(content);
+      break;
+    case "error":
+      toast.error(content);
+      break;
+    default:
+      break;
+  }
 };
 
 const authLink = setContext((ctx, { headers }) => {
@@ -46,6 +41,41 @@ const authLink = setContext((ctx, { headers }) => {
   };
 });
 
+const responseMessageLink = new ApolloLink((operation, forward) =>
+  forward(operation)?.map((response) => {
+    const { data } = response;
+    const keys = Object.keys(data ?? {});
+    if (keys?.length > 0 && data?.[`${keys?.[0]}`]?.message) {
+      console.log(keys?.[0]);
+      if (keys?.[0] === "forgotUserPassword") {
+        if (data?.[`${keys?.[0]}`]?.status !== "ERROR") {
+          setTimeout(() => {
+            toastMessage({
+              message:
+                data?.[`${keys?.[0]}`]?.message || "Operation successful",
+              type: "success",
+            });
+          }, 1000);
+        }
+      } else {
+        setTimeout(() => {
+          const oResponse = data?.[`${keys?.[0]}`];
+
+          if (!response) {
+            return;
+          }
+
+          toastMessage({
+            message: oResponse?.message || "Operation successful",
+            type: oResponse?.status === "ERROR" ? "error" : "success",
+          });
+        }, 1000);
+      }
+    }
+    return response;
+  })
+);
+
 const errorLink = onError((options) => {
   const { graphQLErrors, networkError, response } = options;
   if (networkError && "statusCode" in networkError) {
@@ -56,7 +86,7 @@ const errorLink = onError((options) => {
 
       disableToastTimeout = setTimeout(() => {
         if (networkError.message) {
-          toast({
+          toastMessage({
             message: networkError.message,
             type: "error",
           });
@@ -75,14 +105,14 @@ const errorLink = onError((options) => {
     if (isTokenExpired) {
       if (!isForBidden) {
         setTimeout(() => {
-          toast({
+          toastMessage({
             message: graphQLErrors?.[0]?.message,
             type: "error",
           });
         }, 1000);
       } else {
         setTimeout(() => {
-          toast({
+          toastMessage({
             message: "Something went wrong!",
             type: "error",
           });
@@ -118,13 +148,10 @@ const errorLink = onError((options) => {
         localStorage.clear();
       }
 
-      // commenting for future use
-      // setTimeout(() => {
-      //   toast({
-      //     message: errorMessage,
-      //     type: 'error',
-      //   });
-      // }, 1000);
+      toastMessage({
+        message: errorMessage,
+        type: "error",
+      });
 
       // eslint-disable-next-line no-console
       return console?.log(
@@ -136,14 +163,14 @@ const errorLink = onError((options) => {
   if (networkError) {
     // eslint-disable-next-line no-console
     console?.log(`[Network error]: ${networkError}`);
-    toast({ message: networkError?.message, type: "error" });
+    toastMessage({ message: networkError?.message, type: "error" });
     // Sentry?.captureException(new Error(`[Network error]: ${networkError}`));
   }
 });
 
 const client = new ApolloClient({
   cache: cacheData,
-  link: from([errorLink, authLink, httpLink]), // responseMessageLink - removed for future use
+  link: from([errorLink, authLink, httpLink, responseMessageLink]), // responseMessageLink - removed for future use
 });
 
 export default client;

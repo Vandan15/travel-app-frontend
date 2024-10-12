@@ -1,15 +1,23 @@
+import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { COOKIE_EXPIRY, ROUTES } from "../../common/constant";
 import { deleteCookie, getCookie, setCookie } from "../../common/utils";
 import AppLogo from "../../components/common/AppLogo";
+import CommonButton from "../../components/primitives/CommonButton";
+import { FORGOT_PASSWORD } from "./graphql/mutations";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [showTimer, setShowTimer] = useState(false);
   const [timeLeft, setTimeLeft] = useState(60);
+
+  const [forgotPasswordMutate, { loading }] = useMutation(FORGOT_PASSWORD, {
+    onError: () => {},
+  });
 
   useEffect(() => {
     const storedEmail = getCookie("timer");
@@ -66,11 +74,20 @@ export default function ForgotPassword() {
     }
 
     if (isValid) {
-      setShowTimer(true);
-      setTimeLeft(COOKIE_EXPIRY * 60);
-      const expiryTime = new Date().getTime() + COOKIE_EXPIRY * 60 * 1000; // Current
-      setCookie("timer", expiryTime, COOKIE_EXPIRY);
-      setCookie("email", email, COOKIE_EXPIRY);
+      forgotPasswordMutate({
+        variables: { email },
+        onCompleted: (response) => {
+          setShowTimer(true);
+          setTimeLeft(COOKIE_EXPIRY * 60);
+          const expiryTime = new Date().getTime() + COOKIE_EXPIRY * 60 * 1000; // Current
+          setCookie("timer", expiryTime, COOKIE_EXPIRY);
+          setCookie("email", email, COOKIE_EXPIRY);
+          toast.success(response?.forgotPassword?.message);
+        },
+        onError: (err) => {
+          setEmailError(err?.message);
+        },
+      });
     }
   };
 
@@ -104,14 +121,18 @@ export default function ForgotPassword() {
               {emailError}
             </Form.Control.Feedback>
           </Form.Group>
-          <Button
+          <CommonButton
             variant="primary"
             type="submit"
             className="w-100 mb-3"
-            disabled={showTimer}
+            disabled={loading || showTimer}
           >
-            {showTimer ? `Resend in (${timeLeft}s)` : "Send Email"}
-          </Button>
+            {loading
+              ? "Sending..."
+              : showTimer
+              ? `Resend in (${timeLeft}s)`
+              : "Send Email"}
+          </CommonButton>
           {showTimer ? (
             <div className="text-center">
               Not your email?{" "}

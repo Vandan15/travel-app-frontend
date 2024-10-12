@@ -1,9 +1,12 @@
+import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import toast from "react-hot-toast";
 import { Link, useSearchParams } from "react-router-dom";
 import { ROUTES } from "../../common/constant";
 import AppLogo from "../../components/common/AppLogo";
 import useRouter from "../../hooks/useRouter";
+import { RESET_PASSWORD } from "./graphql/mutations";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -13,6 +16,9 @@ export default function ResetPassword() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const { navigate } = useRouter();
+  const [resetPasswordMutate, { loading }] = useMutation(RESET_PASSWORD, {
+    onError: () => {},
+  });
 
   useEffect(() => {
     if (!token) {
@@ -53,6 +59,13 @@ export default function ResetPassword() {
 
     if (isValid) {
       // Handle form submission
+      resetPasswordMutate({
+        variables: { data: { token, newPassword: password } },
+        onCompleted: (response) => {
+          toast.success(response?.resetPassword?.message);
+          navigate(ROUTES.LOGIN, { replace: true });
+        },
+      });
     }
   };
 
@@ -66,7 +79,7 @@ export default function ResetPassword() {
           <AppLogo />
         </div>
         <Form onSubmit={handleSubmit} autoComplete="off">
-          <Form.Group controlId="password" className="mb-3">
+          <Form.Group controlId="password" className="mb-4">
             <Form.Label>New Password</Form.Label>
             <Form.Control
               type="password"
@@ -92,8 +105,13 @@ export default function ResetPassword() {
               {confirmPasswordError}
             </Form.Control.Feedback>
           </Form.Group>
-          <Button variant="primary" type="submit" className="w-100 mb-3">
-            Reset Password
+          <Button
+            variant="primary"
+            type="submit"
+            className="w-100 mb-3"
+            disabled={loading}
+          >
+            {loading ? "Resetting..." : "Reset Password"}
           </Button>
           <div className="text-center">
             Remember your password? <Link to={ROUTES.LOGIN}>Login</Link>

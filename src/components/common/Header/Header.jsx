@@ -45,10 +45,10 @@ const Header = () => {
       return (
         <div className="d-flex gap-2">
           <Link to={ROUTES.LOGIN}>
-            <CommonButton>Login</CommonButton>
+            <CommonButton variant="secondary">Login</CommonButton>
           </Link>
           <Link to={ROUTES.REGISTER}>
-            <CommonButton>Register</CommonButton>
+            <CommonButton variant="secondary">Register</CommonButton>
           </Link>
         </div>
       );
@@ -117,7 +117,7 @@ const Header = () => {
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
-          <div className="ms-md-4 ms-2">
+          <div className="d-flex align-items-center">
             <AuthSection />
             <li className="d-inline-block d-lg-none ms-3 toggle_btn">
               <i
