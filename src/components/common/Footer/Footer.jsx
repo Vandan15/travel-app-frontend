@@ -4,113 +4,114 @@ import { NavLink } from "react-router-dom";
 import "./footer.css";
 
 const Footer = () => {
-  const [visible, setVisible]=useState(false);
+  const [visible, setVisible] = useState(false);
 
-  const toggleVisible=()=>{
+  const toggleVisible = () => {
     const scrolled = document.documentElement.scrollTop;
-    if(scrolled > 300){
-      setVisible(true)
+    if (scrolled > 300) {
+      setVisible(true);
+    } else if (scrolled <= 300) {
+      setVisible(false);
     }
-   else if(scrolled  <= 300){
-      setVisible(false)
-    }
-  }
+  };
 
-  const scrollTop =()=>{
+  const scrollTop = () => {
     window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    })
-  }
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
-  if(typeof window !== "undefined"){
-    window.addEventListener("scroll", toggleVisible)
+  if (typeof window !== "undefined") {
+    window.addEventListener("scroll", toggleVisible);
   }
-
 
   return (
     <>
-    <footer className="pt-5">
-      <Container>
-        <Row>
-          <Col md="3" sm="12" className="quick_link mt-3 mt-md-0 ">
-            {/* <h4 className="mt-lg-0 mt-sm-3">Company </h4> */}
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                <NavLink to="/">About Us</NavLink>
-              </ListGroup.Item>
-              <ListGroup.Item>
-              <NavLink to="/">News</NavLink>
-              </ListGroup.Item>
-              <ListGroup.Item>
-              <NavLink to="/">Faq</NavLink>
-              </ListGroup.Item>
+      <footer className="pt-5" id="contact">
+        <Container>
+          <Row>
+            <Col md="3" sm="12" className="quick_link mt-3 mt-md-0 ">
+              {/* <h4 className="mt-lg-0 mt-sm-3">Company </h4> */}
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <NavLink to="/">About Us</NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <NavLink to="/">News</NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <NavLink to="/">Faq</NavLink>
+                </ListGroup.Item>
+              </ListGroup>
+            </Col>
+            <Col md="3" sm="12" className="quick_link mt-3 mt-md-0 ">
+              <h4 className="mt-lg-0 mt-sm-3">Explore </h4>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <NavLink to="/"> Faq</NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <NavLink to="/">Tour Listings</NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <NavLink to="/"> Destination</NavLink>
+                </ListGroup.Item>
+              </ListGroup>
+            </Col>
+            <Col md="3" sm="12" className="quick_link mt-3 mt-md-0 ">
+              <h4 className="mt-lg-0 mt-sm-3">Quick Link </h4>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <NavLink to="/"> Home</NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <NavLink to="/">About Us </NavLink>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <NavLink to="/"> Contact Us </NavLink>
+                </ListGroup.Item>
+              </ListGroup>
+            </Col>
+            <Col md="3" sm="12" className="location mt-3 mt-md-0 ">
+              <h4 className="mt-lg-0 mt-sm-3">Contact Info </h4>
 
-            </ListGroup>
-          </Col>
-          <Col md="3" sm="12" className="quick_link mt-3 mt-md-0 ">
-          <h4 className="mt-lg-0 mt-sm-3">Explore </h4>
-          <ListGroup variant="flush">
-              <ListGroup.Item>
-                <NavLink to="/"> Faq</NavLink>
-              </ListGroup.Item>
-              <ListGroup.Item>
-              <NavLink to="/">Tour Listings</NavLink>
-              </ListGroup.Item>
-              <ListGroup.Item>
-              <NavLink to="/"> Destination</NavLink>
-              </ListGroup.Item>
+              <div className="d-flex align-items-center">
+                <p className="pb-2"> Navsari, Gujarat, India</p>
+              </div>
 
-            </ListGroup>
-          </Col>
-          <Col md="3" sm="12" className="quick_link mt-3 mt-md-0 ">
-          <h4 className="mt-lg-0 mt-sm-3">Quick Link </h4>
-          <ListGroup variant="flush">
-              <ListGroup.Item>
-                <NavLink to="/"> Home</NavLink>
-              </ListGroup.Item>
-              <ListGroup.Item>
-              <NavLink to="/">About Us </NavLink>
-              </ListGroup.Item>
-              <ListGroup.Item>
-              <NavLink to="/"> Contact Us </NavLink>
-              </ListGroup.Item>
-
-            </ListGroup>
-          </Col>
-          <Col md="3" sm="12" className="location mt-3 mt-md-0 ">
-          <h4 className="mt-lg-0 mt-sm-3">Contact Info </h4>
-
-          <div className="d-flex align-items-center">
-            <p className="pb-2"> Navsari, Gujarat, India</p>
-          </div>
-
-          <div className="d-flex align-items-top my-2">
-          <i className="bi bi-geo-alt me-3"></i>
-          <a target="_blank" href="mailto:rawatcoder@gmail.com" className="d-block" rel="noreferrer" >darshil@gmail.com</a>
-          </div>
-          <div className="d-flex align-items-top ">
-          {/* <i className="bi bi-telephone me-3"></i> */}
-          {/* <a target="_blank" href="tel:9876543210" className="d-block" ></a> */}
-          </div>
-
-          </Col>
-        </Row>
-        {/* <Row className="py-2 bdr mt-3">
+              <div className="d-flex align-items-top my-2">
+                <i className="bi bi-geo-alt me-3"></i>
+                <a
+                  target="_blank"
+                  href="mailto:rawatcoder@gmail.com"
+                  className="d-block"
+                  rel="noreferrer"
+                >
+                  darshil@gmail.com
+                </a>
+              </div>
+              <div className="d-flex align-items-top ">
+                {/* <i className="bi bi-telephone me-3"></i> */}
+                {/* <a target="_blank" href="tel:9876543210" className="d-block" ></a> */}
+              </div>
+            </Col>
+          </Row>
+          {/* <Row className="py-2 bdr mt-3">
         <Col className="col copyright">
         <p className="text-light">   @ 2024. rawatcoder All rights reserved </p>
         </Col>
         </Row> */}
+        </Container>
+      </footer>
 
-      </Container>
-    </footer>
-
-    <div id="back-top"
-    onClick={scrollTop}
-     className={visible ? "active" : ""}>
-    <i className="bi bi-arrow-up"></i>
-
-    </div>
+      <div
+        id="back-top"
+        onClick={scrollTop}
+        className={visible ? "active" : ""}
+      >
+        <i className="bi bi-arrow-up"></i>
+      </div>
     </>
   );
 };

@@ -1,3 +1,7 @@
+.box-search-advance {
+    background: var(--secondaryClr);
+}
+
 .box-search-advance .box-search {
     border: 1px solid var(--bgClr);
     border-radius: 15px;

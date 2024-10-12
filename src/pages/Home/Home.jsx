@@ -1,21 +1,17 @@
-import React from "react";
-import Banner from "../../components/Banner/Banner";
-import AdvanceSearch from "../../components/AdvanceSearch/AdvanceSearch";
-import Features from "../../components/Features/Features";
-import { Container, Row, Col,  } from "react-bootstrap";
-
+import React, { useEffect } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-import "./home.css";
-
-
-import Gallery from "../../components/Gallery/Gallery";
+import "slick-carousel/slick/slick.css";
+import AdvanceSearch from "../../components/AdvanceSearch/AdvanceSearch";
+import Banner from "../../components/Banner/Banner";
 import Cards from "../../components/Cards/Cards";
-import { destinationsData, popularsData } from "../../utils/data";
 import PopularCard from "../../components/Cards/PopularCard";
-
+import Features from "../../components/Features/Features";
+import Gallery from "../../components/Gallery/Gallery";
+import useRouter from "../../hooks/useRouter";
+import { destinationsData, popularsData } from "../../utils/data";
+import "./home.css";
 
 const Home = () => {
   var settings = {
@@ -66,8 +62,16 @@ const Home = () => {
       },
     ],
   };
+  const { location } = useRouter();
 
-
+  useEffect(() => {
+    if (location?.hash) {
+      const element = document.getElementById(location?.hash?.slice(1));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }, [location?.hash]);
 
   return (
     <>
@@ -77,7 +81,7 @@ const Home = () => {
 
       {/* tour seciton start */}
 
-      <section className="tours_section slick_slider">
+      <section className="tours_section slick_slider" id="tours">
         <Container>
           <Row>
             <Col md="12">
@@ -91,9 +95,7 @@ const Home = () => {
             <Col md="12">
               <Slider {...settings}>
                 {destinationsData.map((destination, inx) => {
-                  return (
-                    <Cards destination={destination} key={inx} />
-                  );
+                  return <Cards destination={destination} key={inx} />;
                 })}
               </Slider>
             </Col>
@@ -103,26 +105,26 @@ const Home = () => {
 
       {/* tour seciton start */}
 
-      <section className="popular py-5">
-      <Container>
-        <Row>
-          <Col md="12">
-            <div className="main_heading">
-              <h1> Popular Activities </h1>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-        {popularsData.map((val, inx)=>{
-          return(
-          <Col  md={3} sm={6} xs={12} className="mb-5" key={inx}>
-            <PopularCard val={val} />
-          </Col>
-        )
-        })}
-        </Row>
-      </Container>
-    </section>
+      <section className="popular py-5" id="destination">
+        <Container>
+          <Row>
+            <Col md="12">
+              <div className="main_heading">
+                <h1> Popular Activities </h1>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            {popularsData.map((val, inx) => {
+              return (
+                <Col md={3} sm={6} xs={12} className="mb-5" key={inx}>
+                  <PopularCard val={val} />
+                </Col>
+              );
+            })}
+          </Row>
+        </Container>
+      </section>
 
       <section className="call_us">
         <Container>
@@ -138,13 +140,12 @@ const Home = () => {
                 text ever since the 1500s,{" "}
               </p>
             </Col>
-        
           </Row>
         </Container>
         <div className="overlay"></div>
       </section>
 
-      <section className="gallery">
+      <section className="gallery" id="gallery">
         <Container>
           <Row>
             <Col md="12">

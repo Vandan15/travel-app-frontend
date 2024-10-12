@@ -90,13 +90,13 @@ const Header = () => {
 
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
-                <NavLink className="nav-link" to="/">
+                <NavLink className="nav-link" to="/#home">
                   Home
                 </NavLink>
-                <NavLink className="nav-link" to="/">
+                <NavLink className="nav-link" to="/#about">
                   ABOUT US
                 </NavLink>
-                <NavLink className="nav-link" to="/">
+                <NavLink className="nav-link" to="/#tours">
                   TOURS
                 </NavLink>
 
@@ -104,14 +104,14 @@ const Header = () => {
                   title="DESTINATION"
                   id={`offcanvasNavbarDropdown-expand-lg`}
                 >
-                  <NavLink className="nav-link text-dark" to="/">
+                  <NavLink className="nav-link text-dark" to="/#destination">
                     SPAIN TOURS
                   </NavLink>
                 </NavDropdown>
-                <NavLink className="nav-link" to="/">
+                <NavLink className="nav-link" to="/#gallery">
                   GALLERY
                 </NavLink>
-                <NavLink className="nav-link" to="/">
+                <NavLink className="nav-link" to="/#contact">
                   CONTACT
                 </NavLink>
               </Nav>

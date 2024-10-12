@@ -1,23 +1,23 @@
 .tours_section .img-box {
     padding: 0px 12px;
   }
-  
+
  .img-box .card {
     border: none;
     width: 100%;
     overflow: hidden;
     position: relative;
   }
-  
+
  .img-box .card a {
     border: none;
   }
-  
+
  .img-box .card img {
     transition: all 0.5s ease 0s;
     filter: brightness(0.8);
   }
-  
+
  .img-box .card .card-title {
     position: absolute;
     top: 5%;
@@ -28,7 +28,7 @@
     font-weight: bold;
     width: 100%;
   }
-  
+
  .img-box .card .tours {
     position: absolute;
     right: 5%;
@@ -43,20 +43,20 @@
     transform: translateX(120%);
     transition: 0.2s ease-in;
   }
-  
+
  .img-box .card:hover {
     transition: 0.2 ease-in;
   }
-  
+
  .img-box .card:hover img {
     filter: brightness(1);
     transform: scale(1.1);
   }
-  
+
  .img-box .card:hover .tours {
     transform: translateX(0);
   }
-  
+
 
 
 
@@ -67,12 +67,13 @@
     border: none;
     transition: all 0.5s ease 0s;
     overflow: hidden;
+    background: var(--secondaryClr);
 }
 
 .popular:hover{
     transform: translateY(-10px);
     transition: 0.2s ease-in;
-    
+
 }
 
 
@@ -128,7 +129,7 @@
     transition: all 0.5s ease 0s;
     margin-bottom: 10px;
 
-    
+
 }
 
 .popular  .card-body .card-text {
@@ -139,7 +140,7 @@
     color:#4f5e71;
 }
 
- 
+
 .popular  .card-body .card-text i {
     position: absolute;
     top: 15px;
@@ -173,10 +174,3 @@
     color:black;
     font-weight: bold;
 }
-
-
-
-
-
-
-  

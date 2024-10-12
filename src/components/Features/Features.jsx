@@ -1,25 +1,24 @@
 import React from "react";
 import "../Features/features.css";
 
+import { Card, Col, Container, Row } from "react-bootstrap";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import feature1 from "../../assets/images/feature/beach-umbrella.png";
 import feature2 from "../../assets/images/feature/deal.png";
 import feature3 from "../../assets/images/feature/location.png";
 import feature4 from "../../assets/images/feature/medal.png";
-import { Card, Col, Container, Row } from "react-bootstrap";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
 
 const Features = () => {
   var settings = {
     dots: false,
     infinite: true,
-    autoplay:false,
-    autoplaySpeed:1500,
+    autoplay: false,
+    autoplaySpeed: 1500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    
+
     responsive: [
       {
         breakpoint: 1024,
@@ -45,8 +44,8 @@ const Features = () => {
           slidesToShow: 2,
           slidesToScroll: 2,
           autoplay: true,
-          prevArrow:false,
-          nextArrow:false,
+          prevArrow: false,
+          nextArrow: false,
         },
       },
       {
@@ -54,8 +53,8 @@ const Features = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          prevArrow:false,
-          nextArrow:false,
+          prevArrow: false,
+          nextArrow: false,
         },
       },
     ],
@@ -90,33 +89,30 @@ const Features = () => {
   ];
 
   return (
-    <>
-    
-      <section className="feature-section">
-        <Container>
-          <Row>
-            <Col md="12">
-              <Slider {...settings}>
-                {featureList.map((feature, inx) => {
-                  return (
-                    <Card key={inx}>
-                      <Card.Img
-                        variant="top"
-                        src={feature.image}
-                        className="img-fluid"
-                        alt={feature.title}
-                      />
-                      <Card.Title>{feature.title}</Card.Title>
-                      <Card.Text>{feature.des}</Card.Text>
-                    </Card>
-                  );
-                })}
-              </Slider>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-    </>
+    <section className="feature-section" id="about">
+      <Container>
+        <Row>
+          <Col md="12">
+            <Slider {...settings}>
+              {featureList.map((feature, inx) => {
+                return (
+                  <Card key={inx}>
+                    <Card.Img
+                      variant="top"
+                      src={feature.image}
+                      className="img-fluid"
+                      alt={feature.title}
+                    />
+                    <Card.Title>{feature.title}</Card.Title>
+                    <Card.Text>{feature.des}</Card.Text>
+                  </Card>
+                );
+              })}
+            </Slider>
+          </Col>
+        </Row>
+      </Container>
+    </section>
   );
 };
 
