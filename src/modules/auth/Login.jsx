@@ -50,7 +50,6 @@ export default function Login() {
       loginMutate({
         variables: { data: { email, password } },
         onCompleted: (response) => {
-          console.log(response);
           const { accessToken, user } = response.login;
           setEmail("");
           setPassword("");

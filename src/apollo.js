@@ -46,7 +46,6 @@ const responseMessageLink = new ApolloLink((operation, forward) =>
     const { data } = response;
     const keys = Object.keys(data ?? {});
     if (keys?.length > 0 && data?.[`${keys?.[0]}`]?.message) {
-      console.log(keys?.[0]);
       if (keys?.[0] === "forgotUserPassword") {
         if (data?.[`${keys?.[0]}`]?.status !== "ERROR") {
           setTimeout(() => {

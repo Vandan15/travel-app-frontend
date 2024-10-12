@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { Button, Col, Container, Row } from "react-bootstrap";
 import "../AdvanceSearch/search.css";
-import { Container, Row, Col, Button } from "react-bootstrap";
 // import
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 
@@ -11,18 +11,18 @@ const AdvanceSearch = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const selectedLocation =(value)=>{
-    console.log("Location", value)
-  }
+  const selectedLocation = (value) => {
+    console.log("Location", value);
+  };
 
-  const selectedGuest =(value)=>{
-    console.log("Guest ", value)
-  }
+  const selectedGuest = (value) => {
+    console.log("Guest ", value);
+  };
 
   return (
     <>
       <section className="box-search-advance">
-        <Container> 
+        <Container>
           <Row>
             <Col md={12} xs={12}>
               <div className="box-search shadow-sm">
@@ -37,7 +37,7 @@ const AdvanceSearch = () => {
                       "Sydney, Australia",
                       "Melbourne, Australia",
                       "Paris, France",
-                      "Navsari,India"
+                      "Navsari,India",
                     ]}
                   />
                 </div>
@@ -49,7 +49,6 @@ const AdvanceSearch = () => {
                     selectsStart
                     startDate={startDate}
                     endDate={endDate}
-                   
                     dateFormat="dd, MMMM, yyyy"
                   />
                 </div>
@@ -76,10 +75,9 @@ const AdvanceSearch = () => {
                   />
                 </div>
                 <div className="item-search bd-none">
-                    <Button className="primaryBtn flex-even d-flex justify-content-center">
-                    <i className="bi bi-search me-2"></i> Search 
-                    </Button>
-
+                  <Button className="primaryBtn flex-even d-flex justify-content-center">
+                    <i className="bi bi-search me-2"></i> Search
+                  </Button>
                 </div>
               </div>
             </Col>
