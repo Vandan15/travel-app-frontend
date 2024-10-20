@@ -1,0 +1,36 @@
+.hotel-card {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.hotel-card:hover {
+  transform: translateY(-5px);
+}
+
+.hotel-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+.rating {
+  margin-bottom: 10px;
+}
+
+.book-now-btn {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.user-booking {
+  margin-top: 50px;
+}
+
+.user-booking .title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.user-booking .table {
+  border-radius: 10px;
+}

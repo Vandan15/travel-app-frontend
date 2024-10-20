@@ -10,6 +10,11 @@
   z-index: 999;
   box-shadow: var(--bs-box-shadow-sm) !important;
 }
+
+.is-sticky a .common-btn{
+  color: var(--black);
+}
+
 @keyframes smothScroll {
   0% {
     transform: translateY(-40px);

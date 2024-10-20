@@ -5,6 +5,7 @@ import { ROUTES } from "../../common/constant";
 import { getInitials } from "../../common/utils";
 import CommonButton from "../../components/primitives/CommonButton";
 import useRouter from "../../hooks/useRouter";
+import UserBooking from "../booking/UserBooking";
 
 export default function Profile() {
   const {
@@ -53,6 +54,7 @@ export default function Profile() {
           </Row>
         </Card.Body>
       </Card>
+      <UserBooking />
     </Container>
   );
 }

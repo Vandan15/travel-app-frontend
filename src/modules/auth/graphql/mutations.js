@@ -45,3 +45,17 @@ export const VERIFY_EMAIL = gql(`
     message
   }
 }`);
+
+export const CREATE_BOOKING = gql(`
+  mutation CreateUserBooking($data: CreateUserBookingInput!) {
+  createUserBooking(data: $data) {
+    message
+  }
+}`);
+
+export const CANCEL_BOOKING = gql(`
+  mutation CancelUserBooking($data: UserBookingWhereInput!) {
+  cancelUserBooking(data: $data) {
+    message
+  }
+}`);

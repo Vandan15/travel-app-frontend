@@ -12,7 +12,7 @@
 }
 
 .dropdown-custom #dropdown-custom-components span{
-    font-family: var(--fontFamily) !important; 
+    font-family: var(--fontFamily) !important;
     font-weight: bold;
 }
 
@@ -37,7 +37,7 @@
     bottom: 6px;
     content: "\f52a";
     font-size: var(--bodyText);
-    color: var(--textclr);   
+    color: var(--textclr);
 }
 
 .dropdown-custom .dropdown-toggle::after {
@@ -47,13 +47,17 @@
     bottom: 6px;
     content: "\f282";
     font-size: var(--bodyText);
-    color: var(--textclr);   
+    color: var(--textclr);
 }
 
 .dropdown-custom .dropdown-menu {
     width: 100%;
     padding: 10px;
     min-width: 12rem;
+}
+.dropdown-custom  .list-unstyled{
+    max-height: calc(100vh - 200px);
+    overflow: auto;
 }
 
 .dropdown-custom  .list-unstyled li a {
@@ -67,7 +71,3 @@
 
     font-weight: bold;
 }
-
-
-
-

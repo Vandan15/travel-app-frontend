@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,6 +10,7 @@ import PopularCard from "../../components/Cards/PopularCard";
 import Features from "../../components/Features/Features";
 import Gallery from "../../components/Gallery/Gallery";
 import useRouter from "../../hooks/useRouter";
+import HotelListings from "../../modules/booking/HotelListings";
 import { destinationsData, popularsData } from "../../utils/data";
 import "./home.css";
 
@@ -63,7 +64,8 @@ const Home = () => {
     ],
   };
   const { location } = useRouter();
-
+  const [cardData, setCardData] = useState([]);
+  const [filterValues, setFilterValues] = useState({});
   useEffect(() => {
     if (location?.hash) {
       const element = document.getElementById(location?.hash?.slice(1));
@@ -73,10 +75,23 @@ const Home = () => {
     }
   }, [location?.hash]);
 
+  const handleSubmit = (data) => {
+    console.log("data", data);
+    setCardData(data?.hotels);
+  };
+
   return (
     <>
       <Banner />
-      <AdvanceSearch />
+      <AdvanceSearch
+        onSubmit={(data, filterValues) => {
+          handleSubmit(data);
+          setFilterValues(filterValues);
+        }}
+      />
+      {cardData?.length > 0 && (
+        <HotelListings cardData={cardData} filterValues={filterValues} />
+      )}
       <Features />
 
       {/* tour seciton start */}
